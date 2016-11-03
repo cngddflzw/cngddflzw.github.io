@@ -1,9 +1,10 @@
-Test
+---
+layout: post
+title:  "Test"
+date:   2016-11-04 00:21:16 +0800
+categories: notes
+---
 
+```java
+private int i = 1;
 ```
-test123
-```
-
-
-
-
