@@ -19,7 +19,7 @@ categories: network tcp tomcat
 
 不难发现, 出现 syn drop 的原因是因为应用没有及时的 accept socket, 导致 BacklogQueue 的堆积. 对应到我们的服务端应用, 实际上就是 tomcat 对连接的处理程序. 由于我们的 tomcat 基本都是使用的 bio acceptor, 下面看 bio 的线程模型.
 
-![](.2017-05-11-sync-drop-and-tomcat-thread-model.markdown_images/89af2252.png)
+![](/_posts/.2017-05-11-sync-drop-and-tomcat-thread-model.markdown_images/89af2252.png)
 
 tomcat 有一个专门的 Acceptor 的用来 accept socket, 它是一个不停的死循环线程, 不断的 accept socket, 并将 socket 派发给线程池去处理实际的数据. 结合实际的 acceptor 代码实现
 
@@ -114,3 +114,7 @@ tomcat 有一个专门的 Acceptor 的用来 accept socket, 它是一个不停�
 3. BacklogQueue 打到 100 以后, 开始出现 syn drop
 
 按照这套配置, 业务线程池队列实际上是用不上的, 因为 maxConnections = maxThreads, 在一定程度上, BacklogQueue 充当了线程池队列的作用
+
+----
+
+参考
