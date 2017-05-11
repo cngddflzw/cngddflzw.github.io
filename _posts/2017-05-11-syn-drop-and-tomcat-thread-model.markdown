@@ -113,8 +113,6 @@ tomcat 有一个专门的 Acceptor 的用来 accept socket, 它是一个不停�
 2. 请求继续增加, BacklogQueue 开始堆积, 这部分请求是无法得到处理的, 在连接建立后就被 hang 住
 3. BacklogQueue 打到 100 以后, 开始出现 syn drop
 
-按照这套配置, 业务线程池队列实际上是用不上的, 因为 maxConnections = maxThreads, 在一定程度上, BacklogQueue 充当了线程池队列的作用
+按照这套配置, 业务线程池队列实际上是用不上的, 因为 maxConnections = maxThreads, 在一定程度上, BacklogQueue 充当了线程池队列的作用.
 
-----
-
-参考
+总的来说, 还是业务服务太慢, 服务有待优化.
