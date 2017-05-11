@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "从 tcp drop 看 tomcat 线程模型"
+title:  "从 SYN Drop 看 tomcat 线程模型"
 date:   2017-05-11
 categories: tomcat
 ---
