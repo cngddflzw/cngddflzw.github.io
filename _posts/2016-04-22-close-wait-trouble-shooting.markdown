@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "CLOSE_WAIT 问题排查"
+date:   2016-04-22
+categories: tcp networking httpclient
+---
+
 * [问题背景](#h1)
 * [问题分析](#h2)
 * [解决问题](#h3)
