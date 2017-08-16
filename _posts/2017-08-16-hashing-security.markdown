@@ -21,23 +21,27 @@ hash("waltz") = c0e81794384491161f1777c232bc6bd9ec38f616560b120fda8e90f383853542
 
 密码 Hash 主要是指对存在数据库中的密码不直接明文存储, 而使用加密后的加密函数存储, 这样在数据库暴露以后, 攻击者也无法知道真实密码是什么. 通常, 使用密码 Hash 的步骤如下:
 
-> 1. 用户创建账号
-> 2. 对用户密码进行 hash 并存入数据库
-> 3. 用户登录, 输入明文密码, 对明文明文密码进行 hash 并与数据库中的密文密码进行比对
-> 4. 如果比对成功, 则用户登录成功
+```
+1. 用户创建账号
+2. 对用户密码进行 hash 并存入数据库
+3. 用户登录, 输入明文密码, 对明文明文密码进行 hash 并与数据库中的密文密码进行比对
+4. 如果比对成功, 则用户登录成功
+```
+
 需要注意的是, 这里说的 hash 函数, 与数据结构中所说的 hash 函数并不一样, 数据结构中所说的 hash 函数主要用于 hash table, 他追求的目的是高效和速度, 而不是安全. 只有 加密 hash 函数 (cryptographic hash functions) 才能用来实现密码 hash, 例如 SHA256, SHA512, RipeMD, WHIRLPOOL 等.
 
 # 破解 Hash 密文
 
 ## 字典攻击 (Dictionary Attacks)
 
-> 1. 字典攻击
-> 2. Trying apple : failed
-> 3. Trying blueberry : failed
-> 4. Trying justinbeiber : failed
-> 5. ...
-> 6. Trying letmein : failed
-> 7. Trying s3cr3t : success!
+```
+Trying apple : failed
+Trying blueberry : failed
+Trying justinbeiber : failed
+...
+Trying letmein : failed
+Trying s3cr3t : success!
+```
 
 最简单的方法是使用字典攻击, 字典通常是由一些常用与密码的单词, 短语, 字符串以及他们对应的 hash 值预先生成的一个映射列表. 使用字典和数据库中的 hash 值比对, 如果匹配, 说明找到了明文密码. 通常明文密码会用缩写 (leet speak) 替代, 让字典更高效, 例如使用 "h3110" 替代 "hello".
 彩虹表 (Rainbow Table) 
@@ -45,13 +49,14 @@ hash("waltz") = c0e81794384491161f1777c232bc6bd9ec38f616560b120fda8e90f383853542
 
 ## 暴力破解 (Brute Force Attacks)
 
-> 1. 暴力破解
-> 2. Trying aaaa : failed
-> 3. Trying aaab : failed
-> 4. Trying aaac : failed
-> 5. ...
-> 6. Trying acdb : failed
-> 7. Trying acdc : success!
+```
+Trying aaaa : failed
+Trying aaab : failed
+Trying aaac : failed
+...
+Trying acdb : failed
+Trying acdc : success!
+```
 
 暴力破解是将所有可能出现的字母组合使用特定 hash 函数进行 hash, 然后跟数据库的密码 hash 值进行匹配. 这种方法需要大量的 hash 计算, 需要的时间很长, 但是无法防御.
 
@@ -90,16 +95,16 @@ hash("hello" + "YYLmfY6IehjZMQ") = a49670c3c18b9e079b9cfaf51634f563dc8ae3070db2c
 
 如上所说, 正确的盐应该是
 
-> 1. 每个用户的盐都不同
-> 2. 使用足够长的盐
+1. 每个用户的盐都不同
+2. 使用足够长的盐
 
 ## 总是在 Server 端加密
 
 如果你是一个 Web 程序, 记住一定要在 Server 端进行加密. 因为:
 
-> 1. 如果你的加密逻辑完全在客户端, 那么攻击者在拖库后, 直接用密文密码就可以登录你的服务, 甚至不需要知道你的原始明文密码.
-> 2. 客户端 hash 加密并不是保护密码的方式, 因为中间人攻击的存在, 他甚至可以直接篡改你的 JS, 让加密函数无法运行. (这种攻击的防御方式应该是使用 HTTPS, 而非 hash)
-> 3. 有的用户浏览器可能并未开启 JS 支持.
+1. 如果你的加密逻辑完全在客户端, 那么攻击者在拖库后, 直接用密文密码就可以登录你的服务, 甚至不需要知道你的原始明文密码.
+2. 客户端 hash 加密并不是保护密码的方式, 因为中间人攻击的存在, 他甚至可以直接篡改你的 JS, 让加密函数无法运行. (这种攻击的防御方式应该是使用 HTTPS, 而非 hash)
+3. 有的用户浏览器可能并未开启 JS 支持.
 
 ## 使用慢 hash 函数 (Slow Hash Functions)
 
